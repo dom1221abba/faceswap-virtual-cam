@@ -1,0 +1,6 @@
+{
+  "name": "FaceSwap Virtual Cam",
+  "description": "Câmera virtual para navegador e streaming com substituição de imagem em tempo real",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
