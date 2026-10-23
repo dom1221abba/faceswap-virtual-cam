@@ -19,16 +19,21 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Find and build with Gradle
+    - name: Generate Gradle Wrapper and Build
       run: |
-        GRADLE_PATH=$(find . -name "gradlew" -type f)
-        if [ -z "$GRADLE_PATH" ]; then
-          echo "Error: gradlew not found!"
-          exit 1
+        GRADLE_W=$(find . -name "gradlew" -type f | head -n 1)
+        
+        if [ -z "$GRADLE_W" ]; then
+          echo "gradlew não encontrado. A gerar com gradle wrapper..."
+          SETTINGS_FILE=$(find . -name "settings.gradle*" -type f | head -n 1)
+          PROJECT_DIR=$(dirname "$SETTINGS_FILE")
+          cd "$PROJECT_DIR"
+          gradle wrapper
+        else
+          PROJECT_DIR=$(dirname "$GRADLE_W")
+          cd "$PROJECT_DIR"
         fi
-        PROJECT_DIR=$(dirname "$GRADLE_PATH")
-        echo "Found gradlew at $PROJECT_DIR"
-        cd "$PROJECT_DIR"
+        
         chmod +x gradlew
         ./gradlew assembleDebug
 
